@@ -1,0 +1,19 @@
+
+public class Prim {
+
+	public static void main(String[] args) {
+		
+		String nome = "caique";
+		String nome2 = "caique";
+		
+		System.out.println(nome == nome2);
+		System.out.println(nome.equals(nome2));
+
+		String nome3 = new String("caique");
+		String nome4 = new String("caique");
+
+		System.out.println(nome3 == nome4);
+		System.out.println(nome3.equals(nome4));
+	}
+
+}

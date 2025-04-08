@@ -1,0 +1,14 @@
+
+public class Prim {
+
+	public static void main(String[] args) {
+		
+		String nome = "caique";
+		String nome2 = "caique";
+		
+		System.out.println(nome == nome2);
+		System.out.println(nome.equals(nome2));
+
+	}
+
+}
