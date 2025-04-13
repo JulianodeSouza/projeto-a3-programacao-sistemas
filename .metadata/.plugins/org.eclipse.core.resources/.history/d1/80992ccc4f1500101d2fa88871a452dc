@@ -1,0 +1,56 @@
+//
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//
+//	public class Principal {
+//	
+//	    public static void main(String[] args) {
+//	        String cep = "01001000"; // Exemplo de CEP
+//	    String url = "https://viacep.com.br/ws/" + cep + "/json/";
+//	
+//	    try {
+//	        // Criando a URL para a requisição
+//	        URL obj = new URL(url);
+//	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+//	        
+//	        // Definindo o método de requisição (GET)
+//	        con.setRequestMethod("GET");
+//	
+//	        // Obtendo o código de resposta HTTP
+//	        int responseCode = con.getResponseCode();
+//	        System.out.println("Código de resposta HTTP: " + responseCode);
+//	
+//	        if (responseCode == HttpURLConnection.HTTP_OK) { // Código 200 significa sucesso
+//	            // Lendo a resposta da API
+//	            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//	            String inputLine;
+//	            StringBuilder response = new StringBuilder();
+//	
+//	            while ((inputLine = in.readLine()) != null) {
+//	                response.append(inputLine);
+//	            }
+//	            in.close();
+//	
+//	            // Exibindo a resposta JSON
+//	            String jsonResponse = response.toString();
+//	            System.out.println("Resposta JSON: " + jsonResponse);
+//	
+//	            // Convertendo JSON para objeto Java
+//	            ObjectMapper objectMapper = new ObjectMapper();
+//	            Endereco endereco = objectMapper.readValue(jsonResponse, Endereco.class);
+//	
+//	            // Aqui você pode salvar o objeto endereco no seu banco de dados
+//	            System.out.println(endereco);
+//	
+//	        } else {
+//	            System.out.println("Erro na requisição: " + responseCode);
+//		            }
+//		        } catch (Exception e) {
+//		            e.printStackTrace();
+//		        }
+//		    
+//		}
+//	}

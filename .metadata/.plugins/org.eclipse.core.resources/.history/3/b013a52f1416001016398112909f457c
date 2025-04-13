@@ -1,0 +1,61 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONObject;
+
+public class ApiViaCep {
+
+    public void buscarCep(String cep) {
+        try {
+            // Monta a URL da requisição
+            String enderecoUrl = "https://viacep.com.br/ws/" + cep + "/json/";
+            URL url = new URL(enderecoUrl);
+
+            // Abre a conexão HTTP
+            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+            conexao.setRequestMethod("GET");
+
+            // Lê a resposta da requisição
+            BufferedReader leitor = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
+            String linha;
+            StringBuilder resposta = new StringBuilder();
+
+            while ((linha = leitor.readLine()) != null) {
+                resposta.append(linha);
+            }
+            leitor.close();
+
+            // Converte a resposta para JSON
+            JSONObject json = new JSONObject(resposta.toString());
+
+            // Extrai informações do JSON
+            String logradouro = json.optString("logradouro");
+            String bairro = json.optString("bairro");
+            String cidade = json.optString("localidade");
+            String estado = json.optString("uf");
+            String estado = json.optString("uf");
+            String estado = json.optString("uf");
+            String estado = json.optString("uf");
+            String estado = json.optString("uf");
+
+            // Exibe as informações
+            System.out.println("Logradouro: " + logradouro);
+            System.out.println("Bairro: " + bairro);
+            System.out.println("Cidade: " + cidade);
+            System.out.println("Estado: " + estado);
+
+        } catch (Exception erro) {
+            erro.printStackTrace();
+            System.out.println("Erro ao buscar o CEP: " + erro.getMessage());
+        }
+    }
+
+    // Método principal para testar a funcionalidade
+    public static void main(String[] args) {
+        ApiViaCep api = new ApiViaCep();
+        api.buscarCep("01001000"); // Você pode trocar o CEP aqui para testar outros
+    }
+}

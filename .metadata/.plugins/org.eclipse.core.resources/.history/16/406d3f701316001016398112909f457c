@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONObject;
+
+public class ApiViaCep {
+	
+	public static void main(String[] args) {
+        // O CEP que você quer testar
+        String cep = "82820270";  // Exemplo de CEP: "01001000" (São Paulo/SP)
+
+        try {
+            // Chama o método para obter os dados do CEP
+            String response = getCepData(cep);
+            
+            // Parseia a resposta em JSON
+            JSONObject json = new JSONObject(response);
+            
+            // Extrai algumas informações do JSON
+            String logradouro = json.getString("logradouro");
+            String bairro = json.getString("bairro");
+            String cidade = json.getString("localidade");
+            String estado = json.getString("uf");
+            
+            // Imprime as informações
+            System.out.println("Logradouro: " + logradouro);
+            System.out.println("Bairro: " + bairro);
+            System.out.println("Cidade: " + cidade);
+            System.out.println("Estado: " + estado);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para fazer a requisição HTTP ao ViaCEP
+    public static String getCepData(String cep) throws Exception {
+        // Monta a URL para consulta no ViaCEP
+        String urlString = "https://viacep.com.br/ws/" + cep + "/json/";
+        URL url = new URL(urlString);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        
+        // Lê a resposta da requisição
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+        
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        
+        // Retorna o JSON em forma de String
+        return response.toString();
+    }
+
+}

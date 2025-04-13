@@ -1,0 +1,48 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONObject;
+
+public class ApiViaCep {
+
+    public void buscarCep(String cep) {
+        try {
+            // Monta a URL da requisição
+            String enderecoUrl = "https://viacep.com.br/ws/" + cep + "/json/";
+            URL url = new URL(enderecoUrl);
+
+            // Abre a conexão HTTP
+            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+            conexao.setRequestMethod("GET");
+
+            // Lê a resposta da requisição
+            BufferedReader leitor = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
+            String linha;
+            StringBuilder resposta = new StringBuilder();
+
+            while ((linha = leitor.readLine()) != null) {
+                resposta.append(linha);
+            }
+            leitor.close();
+
+            // Converte a resposta para JSON
+            JSONObject json = new JSONObject(resposta.toString());
+
+            // Extrai informações do JSON
+            String estado = json.optString("estado");
+            String uf = json.optString("uf");
+            String cidade = json.optString("localidade");
+            String bairro = json.optString("bairro");
+            String rua = json.optString("logradouro");
+            
+
+
+        } catch (Exception erro) {
+            erro.printStackTrace();
+            System.out.println("Erro ao buscar o CEP: " + erro.getMessage());
+        }
+    }
+}
